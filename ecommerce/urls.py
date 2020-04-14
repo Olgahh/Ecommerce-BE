@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #Products and Category
     path('products/<int:category_id>/', views.ProductList.as_view(), name="product-list"),
-    path('/', views.CategoryList.as_view(), name="category-list"),
+    path('', views.CategoryList.as_view(), name="category-list"),
     # path('product/detail/<int:product_id>/',views.ProductDetail.as_view(), name="product-detail"),
 
     #Profile
