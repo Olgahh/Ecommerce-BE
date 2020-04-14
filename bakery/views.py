@@ -24,7 +24,11 @@ class ProductList(ListAPIView):
         product_list = ProductListSerializer(products, many=True).data
         return Response(product_list, status=HTTP_200_OK)
 
-
+class ProductDetail(RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductListSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'product_id'
 
 class ProfileDetail(RetrieveAPIView):
     queryset = Profile.objects.all()
