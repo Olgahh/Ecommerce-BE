@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Category,Product,Profile,Image
+from .models import Category,Product,Profile
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -21,15 +21,10 @@ class CategoryListSerializer(serializers.ModelSerializer):
         model = Category
         fields = ['id','title','image']
 
-class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Image
-        fields = '__all__'
-
 class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id','name','description','image','price','category']
+        fields = ['id','name', 'description','image','price','category']
 
 class ProfileDetailSerializer(serializers.ModelSerializer):
     update = serializers.HyperlinkedIdentityField(
