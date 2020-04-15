@@ -24,7 +24,7 @@ class CategoryListSerializer(serializers.ModelSerializer):
 class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id','name', 'description','image','price','category']
+        fields = ['id','name', 'description','price','category']
 
 class ProfileDetailSerializer(serializers.ModelSerializer):
     update = serializers.HyperlinkedIdentityField(
