@@ -8,7 +8,7 @@ from .serializers import(
     ProductListSerializer,ProfileDetailSerializer,
     ProfileUpdateSerializer)
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+# from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 
 class RegisterView(CreateAPIView):
     serializer_class = RegisterSerializer
@@ -19,10 +19,9 @@ class CategoryList(ListAPIView):
 
 class ProductList(ListAPIView):
     serializer_class = ProductListSerializer
-    def get(self, request, category_id):
-        products = Product.objects.filter(category=Category.objects.get(id=category_id))
-        product_list = ProductListSerializer(products, many=True,context={"request":request}).data
-        return Response(product_list, status=HTTP_200_OK)
+    def get_queryset(self):
+        products = Product.objects.filter(category_id=self.kwargs.get("category_id"))
+        return products
 
 class ProductDetail(RetrieveAPIView):
     queryset = Product.objects.all()
