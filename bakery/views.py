@@ -18,10 +18,10 @@ class CategoryList(ListAPIView):
     serializer_class = CategoryListSerializer
 
 class ProductList(ListAPIView):
-    queryset = Product.objects.all
+    serializer_class = ProductListSerializer
     def get(self, request, category_id):
         products = Product.objects.filter(category=Category.objects.get(id=category_id))
-        product_list = ProductListSerializer(products, many=True).data
+        product_list = ProductListSerializer(products, many=True,context={"request":request}).data
         return Response(product_list, status=HTTP_200_OK)
 
 class ProductDetail(RetrieveAPIView):
