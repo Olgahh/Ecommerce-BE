@@ -27,10 +27,9 @@ class ImageSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProductListSerializer(serializers.ModelSerializer):
-    images = ImageSerializer(many=True)
     class Meta:
         model = Product
-        fields = ['id','name','description','images','price','category']
+        fields = ['id','name','description','image','price','category']
 
 class ProfileDetailSerializer(serializers.ModelSerializer):
     update = serializers.HyperlinkedIdentityField(
