@@ -23,8 +23,8 @@ class Product(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, default=1, on_delete=models.CASCADE)
     dob = models.DateField(null=True)
-    GENDERS = (('M', 'Male'),('F', 'Female'))
-    gender = models.CharField(max_length=2,choices=GENDERS,default='M')
+    # GENDERS = (('M', 'Male'),('F', 'Female'))
+    # gender = models.CharField(max_length=2,choices=GENDERS,default='M')
     mobile = models.CharField(max_length=20)
 
     def __str__(self):
