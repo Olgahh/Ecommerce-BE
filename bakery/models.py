@@ -23,12 +23,12 @@ class Product(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, default=1, on_delete=models.CASCADE)
     dob = models.DateField(null=True)
-    GENDERS = (('M', 'Male'),('F', 'Female'))
-    gender = models.CharField(max_length=2,choices=GENDERS,default='M')
     mobile = models.CharField(max_length=20)
+    address = models.TextField()
 
     def __str__(self):
         return self.user.username
+        
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwarg):    
     if created:

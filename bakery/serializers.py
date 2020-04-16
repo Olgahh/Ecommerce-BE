@@ -6,8 +6,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     class Meta:
         model = User
-        fields = ["username","first_name" ,"last_name","email","password"]
-
+        fields = ["username","password"]
 
     def create(self, validated_data):
         new_user = User(**validated_data) #unwraps the dictionary.
@@ -15,6 +14,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         new_user.save()
         return validated_data
 
+###########################################################################
 
 class CategoryListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,25 +26,17 @@ class ProductListSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id','name', 'description','image','price','category']
 
+###########################################################################
+
 class ProfileDetailSerializer(serializers.ModelSerializer):
-    # update = serializers.HyperlinkedIdentityField(
-    #     view_name="update",
-    #     lookup_field="id",
-    #     lookup_url_kwarg="profile_id"
-    # )
     class Meta:
         model = Profile
-        fields = ['id','dob','mobile']
+        fields = ['id','dob','mobile','address']
 
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['dob','mobile']
+        fields = ['dob','mobile','address']
 
-# class ProfileSerializer(serializers.ModelSerializer):
-# 	name = serializers.SerializerMethodField()
-# 	class Meta:
-# 		model = User
-# 		fields = ["username", "name", "email","mobile","date_of_birth"]
-# 	def name(self, obj):
-# 		return "%s %s"%(obj.first_name, obj.last_name)
+
+
