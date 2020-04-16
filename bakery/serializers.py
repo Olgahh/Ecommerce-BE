@@ -34,7 +34,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
     # )
     class Meta:
         model = Profile
-        fields = ['dob','mobile']
+        fields = ['id','dob','mobile']
 
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
