@@ -27,14 +27,14 @@ class ProductListSerializer(serializers.ModelSerializer):
         fields = ['id','name', 'description','image','price','category']
 
 class ProfileDetailSerializer(serializers.ModelSerializer):
-    update = serializers.HyperlinkedIdentityField(
-        view_name="update",
-        lookup_field="id",
-        lookup_url_kwarg="profile_id"
-    )
+    # update = serializers.HyperlinkedIdentityField(
+    #     view_name="update",
+    #     lookup_field="id",
+    #     lookup_url_kwarg="profile_id"
+    # )
     class Meta:
         model = Profile
-        fields = ['dob','mobile','update']
+        fields = ['dob','mobile']
 
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
