@@ -24,19 +24,30 @@ from bakery import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     #Products and Category
-    path('products/<int:category_id>/', views.ProductList.as_view(), name="product-list"),
+    # path('categories/', views.CategoryList.as_view(), name="category-list"),
+    # path('categories/<int:category_id>/',
+    #      views.ProductList.as_view(), name="product-list"),
+    # path('products/',
+    #      views.ProductList.as_view(), name="product-detail"),
+    # path('products/<int:product_id>/',
+    #      views.ProductDetail.as_view(), name="product-detail"),
+    path('products/<int:category_id>/',
+         views.ProductList.as_view(), name="product-list"),
     path('', views.CategoryList.as_view(), name="category-list"),
-    path('product/detail/<int:product_id>/',views.ProductDetail.as_view(), name="product-detail"),
+    path('product/detail/<int:product_id>/',
+         views.ProductDetail.as_view(), name="product-detail"),
 
-    #Profile
-    path("profile/<int:profile_id>/detail/",views.ProfileDetail.as_view(), name="profile-detail"),
-    path("profile/<int:profile_id>/update/",views.ProfileUpdate.as_view(), name="profile-update"),
-    #Authentication
-    path('register/', views.RegisterView.as_view(),name='register'),
+    # Profile
+    path("profile/<int:profile_id>/",
+         views.ProfileView.as_view(), name="profile-detail"),
+
+    # Authentication
+    path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', TokenObtainPairView.as_view(), name='login'),
 ]
 
 if settings.DEBUG:
-	urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-	urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
