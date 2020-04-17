@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save, post_delete
 # Create your models here.
 
 class Category(models.Model):
@@ -33,3 +33,6 @@ class Profile(models.Model):
 def create_user_profile(sender, instance, created, **kwarg):    
     if created:
         Profile.objects.create(user=instance)
+
+
+

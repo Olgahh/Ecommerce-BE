@@ -24,13 +24,11 @@ from bakery import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     #Products and Category
-    path('products/<int:category_id>/', views.ProductList.as_view(), name="product-list"),
-    path('', views.CategoryList.as_view(), name="category-list"),
-    path('product/detail/<int:product_id>/',views.ProductDetail.as_view(), name="product-detail"),
-
+    path('categories/', views.CategoryList.as_view(), name="category-list"),
+    path('categories/<int:category_id>/', views.ProductList.as_view(), name="product-list"),
+    path('products/',views.AllProductList.as_view(), name="products-list"),
     #Profile
-    path("profile/<int:profile_id>/detail/",views.ProfileDetail.as_view(), name="profile-detail"),
-    path("profile/<int:profile_id>/update/",views.ProfileUpdate.as_view(), name="profile-update"),
+    path("profile/<int:profile_id>",views.ProfileView.as_view(), name="profile"),
     #Authentication
     path('register/', views.RegisterView.as_view(),name='register'),
     path('login/', TokenObtainPairView.as_view(), name='login'),

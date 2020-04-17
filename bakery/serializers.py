@@ -28,15 +28,10 @@ class ProductListSerializer(serializers.ModelSerializer):
 
 ###########################################################################
 
-class ProfileDetailSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['id','dob','mobile','address']
-
-class ProfileUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ['dob','mobile','address']
 
 
 
