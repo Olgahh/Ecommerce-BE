@@ -36,19 +36,35 @@ def create_user_profile(sender, instance, created, **kwarg):
 
 #Model that represents the relationship between order and product
 class OrderProduct(models.Model):
-    order = models.ForeignKey("Order", on_delete = models.CASCADE)
+    order = models.ForeignKey("Order", on_delete = models.CASCADE,related_name='ordered')
     product = models.ForeignKey(Product, on_delete = models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    
+    quantity_price = models.DecimalField(max_digits=7, null=True, decimal_places=2,default=0.00)
     
     def __str__(self):
         return f'order of {self.product.name} in order #{self.order.id} of quantity{self.quantity}'
 
 class Order(models.Model):
     profile = models.ForeignKey(Profile, on_delete = models.CASCADE, related_name = "orders")
-    paid_for = models.BooleanField(default = False)
+    is_current = models.BooleanField(default = True)
     date_time = models.DateTimeField(auto_now_add=True) 
     products = models.ManyToManyField(Product, through = OrderProduct)
-   
+    total_cost = models.DecimalField(max_digits=7, decimal_places=2, default=0.00)
+
     def __str__(self):
-        return f'{self.profile.user.username}\'s order #{self.id}'
+        return f'{self.profile.user.username}\'s order #{self.id} with total of {self.total_cost}'
+    
+    def total(self):
+        self.total_cost = sum(self.ordered.all().values_list('quantity_price', flat=True))
+        self.save()
+
+
+@receiver(pre_save, sender = OrderProduct)
+def get_quantity_price(instance, *args, **kwargs):
+	instance.quantity_price = instance.product.price*instance.quantity
+
+
+@receiver(post_save, sender=OrderProduct)
+def total(sender, instance, *args, **kwargs):
+    instance.order.total()
+

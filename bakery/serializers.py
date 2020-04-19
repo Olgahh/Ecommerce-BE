@@ -29,9 +29,12 @@ class ProductListSerializer(serializers.ModelSerializer):
 ###########################################################################
 
 class ProfileSerializer(serializers.ModelSerializer):
+    user=serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Profile
-        fields = ['id','dob','mobile','address']
+        fields = ['__all__']
+    
+
 
 
 

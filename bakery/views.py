@@ -37,3 +37,4 @@ class ProfileView(RetrieveUpdateAPIView):
     # permission_classes = [IsAuthenticated]
     lookup_field = 'id'
     lookup_url_kwarg = 'profile_id'
+ 
