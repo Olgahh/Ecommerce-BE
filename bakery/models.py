@@ -36,8 +36,8 @@ def create_user_profile(sender, instance, created, **kwarg):
 
 #Model that represents the relationship between order and product
 class OrderProduct(models.Model):
-    order = models.ForeignKey("Order", on_delete = models.CASCADE,related_name='ordered')
-    product = models.ForeignKey(Product, on_delete = models.CASCADE)
+    order = models.ForeignKey("Order", on_delete = models.CASCADE,related_name='orders')
+    product = models.ForeignKey(Product, on_delete = models.CASCADE,related_name='orders')
     quantity = models.PositiveIntegerField(default=1)
     quantity_price = models.DecimalField(max_digits=7, null=True, decimal_places=2,default=0.00)
     
@@ -45,8 +45,8 @@ class OrderProduct(models.Model):
         return f'order of {self.product.name} in order #{self.order.id} of quantity{self.quantity}'
 
 class Order(models.Model):
-    profile = models.ForeignKey(Profile, on_delete = models.CASCADE, related_name = "orders")
-    is_current = models.BooleanField(default = True)
+    profile = models.ForeignKey(Profile, on_delete = models.CASCADE )
+    is_current = models.BooleanField(default = False)
     date_time = models.DateTimeField(auto_now_add=True) 
     products = models.ManyToManyField(Product, through = OrderProduct)
     total_cost = models.DecimalField(max_digits=7, decimal_places=2, default=0.00)

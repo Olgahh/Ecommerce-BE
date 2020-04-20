@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'bakery',
     'rest_framework',
     'corsheaders',
+    'django_extensions',
 ]
 
 REST_FRAMEWORK = {

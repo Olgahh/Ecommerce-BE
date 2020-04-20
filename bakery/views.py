@@ -1,14 +1,18 @@
 from django.shortcuts import render
+from rest_framework.views import APIView
 from rest_framework.generics import (
     CreateAPIView,ListAPIView,
     RetrieveAPIView,RetrieveUpdateAPIView)
-from .models import Category,Product, Profile
+from .models import *
 from .serializers import( 
     RegisterSerializer,CategoryListSerializer,
     ProductListSerializer,
-    ProfileSerializer)
-from rest_framework.response import Response
-# from rest_framework.permissions import (AllowAny)
+    ProfileSerializer,OrderProductSerializer,OrderListSerializer,
+    TokenObtainPairWithProfileSerializer)
+from rest_framework.permissions import (IsAuthenticated)
+from .permissions import IsStaffOrOwner
+from rest_framework_simplejwt.views import TokenObtainPairView
+###########################################################################################
 
 class RegisterView(CreateAPIView):
     serializer_class = RegisterSerializer
@@ -32,9 +36,26 @@ class AllProductList(ListAPIView):
 ###########################################################################################
 
 class ProfileView(RetrieveUpdateAPIView):
-    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    # permission_classes = [IsAuthenticated]
-    lookup_field = 'id'
-    lookup_url_kwarg = 'profile_id'
+    permission_classes = [IsAuthenticated,IsStaffOrOwner]
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
+
+class TokenObtainPairWithProfileView(TokenObtainPairView):
+	serializer_class = TokenObtainPairWithProfileSerializer
  
+ ###########################################################################################
+
+class CreateOrder(APIView):
+    serializer_class=OrderProductSerializer
+    permission_classes = [IsAuthenticated, IsStaffOrOwner]
+    def perform_create(self, serializer):
+        serializer.save(profile=self.request.user.profile)
+
+class OrderList(ListAPIView):
+    serializer_class = OrderListSerializer
+    permission_classes = [IsAuthenticated, IsStaffOrOwner]
+    def get_queryset(self):
+        return Order.objects.all(profile__user=self.request.user)
+
+

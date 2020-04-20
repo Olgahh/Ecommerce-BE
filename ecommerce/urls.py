@@ -27,8 +27,11 @@ urlpatterns = [
     path('categories/', views.CategoryList.as_view(), name="category-list"),
     path('categories/<int:category_id>/', views.ProductList.as_view(), name="product-list"),
     path('products/',views.AllProductList.as_view(), name="products-list"),
+    #Order
+    path('order/create/', views.CreateOrder.as_view(), name='create-order'),
+    path('orders/', views.OrderList.as_view(), name='orders'),
     #Profile
-    path("profile/<int:profile_id>",views.ProfileView.as_view(), name="profile"),
+    path("profile/",views.ProfileView.as_view(), name="profile"),
     #Authentication
     path('register/', views.RegisterView.as_view(),name='register'),
     path('login/', TokenObtainPairView.as_view(), name='login'),
