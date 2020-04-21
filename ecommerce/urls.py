@@ -30,8 +30,6 @@ urlpatterns = [
     #Order
     path('order/create/', views.CreateOrder.as_view(), name='create-order'),
     path('orders/', views.OrderList.as_view(), name='orders'),
-    #Profile
-    path("profile/",views.ProfileView.as_view(), name="profile"),
     #Authentication
     path('register/', views.RegisterView.as_view(),name='register'),
     path('login/', TokenObtainPairView.as_view(), name='login'),

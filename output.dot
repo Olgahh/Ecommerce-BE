@@ -1,6 +1,6 @@
 digraph model_graph {
   // Dotfile by Django-Extensions graph_models
-  // Created: 2020-04-19 10:53
+  // Created: 2020-04-20 09:57
   // Cli Options: -a
 
   fontname = "Roboto"
@@ -757,13 +757,13 @@ digraph model_graph {
   [label=" user (profile)"] [arrowhead=none, arrowtail=none, dir=both];
 
   bakery_models_OrderProduct -> bakery_models_Order
-  [label=" order (ordered)"] [arrowhead=none, arrowtail=dot, dir=both];
+  [label=" order (orders)"] [arrowhead=none, arrowtail=dot, dir=both];
 
   bakery_models_OrderProduct -> bakery_models_Product
-  [label=" product (orderproduct)"] [arrowhead=none, arrowtail=dot, dir=both];
+  [label=" product (orders)"] [arrowhead=none, arrowtail=dot, dir=both];
 
   bakery_models_Order -> bakery_models_Profile
-  [label=" profile (orders)"] [arrowhead=none, arrowtail=dot, dir=both];
+  [label=" profile (order)"] [arrowhead=none, arrowtail=dot, dir=both];
 
 
 }

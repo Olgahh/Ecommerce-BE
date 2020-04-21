@@ -7,8 +7,8 @@ from .models import *
 from .serializers import( 
     RegisterSerializer,CategoryListSerializer,
     ProductListSerializer,
-    ProfileSerializer,OrderProductSerializer,OrderListSerializer,
-    TokenObtainPairWithProfileSerializer)
+    OrderProductSerializer,OrderListSerializer,
+  )
 from rest_framework.permissions import (IsAuthenticated)
 from .permissions import IsStaffOrOwner
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -33,17 +33,6 @@ class AllProductList(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductListSerializer
   
-###########################################################################################
-
-class ProfileView(RetrieveUpdateAPIView):
-    serializer_class = ProfileSerializer
-    permission_classes = [IsAuthenticated,IsStaffOrOwner]
-    def get_object(self):
-        return Profile.objects.get(user=self.request.user)
-
-class TokenObtainPairWithProfileView(TokenObtainPairView):
-	serializer_class = TokenObtainPairWithProfileSerializer
- 
  ###########################################################################################
 
 class CreateOrder(APIView):

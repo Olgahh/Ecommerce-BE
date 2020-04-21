@@ -20,19 +20,6 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    dob = models.DateField(null=True)
-    mobile = models.CharField(max_length=20)
-    address = models.TextField()
-
-    def __str__(self):
-        return self.user.username
-        
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwarg):    
-    if created:
-        Profile.objects.create(user=instance)
 
 #Model that represents the relationship between order and product
 class OrderProduct(models.Model):
@@ -45,14 +32,14 @@ class OrderProduct(models.Model):
         return f'order of {self.product.name} in order #{self.order.id} of quantity{self.quantity}'
 
 class Order(models.Model):
-    profile = models.ForeignKey(Profile, on_delete = models.CASCADE )
+    user= models.ForeignKey(User, on_delete = models.CASCADE )
     is_current = models.BooleanField(default = False)
     date_time = models.DateTimeField(auto_now_add=True) 
     products = models.ManyToManyField(Product, through = OrderProduct)
     total_cost = models.DecimalField(max_digits=7, decimal_places=2, default=0.00)
 
     def __str__(self):
-        return f'{self.profile.user.username}\'s order #{self.id} with total of {self.total_cost}'
+        return f'{self.user.username}\'s order #{self.id} with total of {self.total_cost}'
     
     def total(self):
         self.total_cost = sum(self.ordered.all().values_list('quantity_price', flat=True))
