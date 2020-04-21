@@ -47,20 +47,3 @@ class OrderListSerializer(serializers.ModelSerializer):
 
 ###########################################################################
 
-class ProductCreateSerializer(serializers.ModelSerializer):
-      class Meta:
-        model = OrderProduct
-        fields = ['product', 'quantity']
-
-class OrderProductSerializer(serializers.ModelSerializer):
-    orders = ProductCreateSerializer(many=True)
-    class Meta:
-        model = Order
-        fields = ['orders']
-
-    def create(self, validated_data):
-        orders = validated_data.pop('orders')
-        order = Order.objects.create(**validated_data)
-        for ordr in orders:
-            Product.objects.create(order=order, **ordr)
-        return order

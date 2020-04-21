@@ -23,7 +23,7 @@ class Product(models.Model):
 
 #Model that represents the relationship between order and product
 class OrderProduct(models.Model):
-    order = models.ForeignKey("Order", on_delete = models.CASCADE,related_name='orders')
+    order = models.ForeignKey("Order", on_delete = models.CASCADE,related_name='orders',null=True)
     product = models.ForeignKey(Product, on_delete = models.CASCADE,related_name='orders')
     quantity = models.PositiveIntegerField(default=1)
     quantity_price = models.DecimalField(max_digits=7, null=True, decimal_places=2,default=0.00)
@@ -32,7 +32,7 @@ class OrderProduct(models.Model):
         return f'order of {self.product.name} in order #{self.order.id} of quantity{self.quantity}'
 
 class Order(models.Model):
-    user= models.ForeignKey(User, on_delete = models.CASCADE )
+    user= models.ForeignKey(User, on_delete = models.CASCADE ,null=True)
     is_current = models.BooleanField(default = False)
     date_time = models.DateTimeField(auto_now_add=True) 
     products = models.ManyToManyField(Product, through = OrderProduct)
@@ -42,7 +42,7 @@ class Order(models.Model):
         return f'{self.user.username}\'s order #{self.id} with total of {self.total_cost}'
     
     def total(self):
-        self.total_cost = sum(self.ordered.all().values_list('quantity_price', flat=True))
+        self.total_cost = sum(self.orders.all().values_list('quantity_price', flat=True))
         self.save()
 
 
