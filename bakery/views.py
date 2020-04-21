@@ -45,6 +45,6 @@ class OrderList(ListAPIView):
     serializer_class = OrderListSerializer
     permission_classes = [IsAuthenticated, IsStaffOrOwner]
     def get_queryset(self):
-        return Order.objects.all(profile__user=self.request.user)
+        return Order.objects.filter(user=self.request.user)
 
 
